@@ -1,21 +1,23 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Footer from './components/Footer'
-import ListItems from './components/ListItems'
-import Navbar from './components/Navbar'
-import Search from './components/Search'
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import Header from './components/Header';
+import ManageNotes from './pages/ManageNotes';
 
 function App() {
 
   return (
     <>
-    <div className="flex flex-col h-screen justify-between">
-      <div>
-        <Navbar />
-        <Search />
-        <ListItems />
-      </div>
-      <Footer />
-    </div>
+      <BrowserRouter>
+        <Header/>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-notes" element={<ManageNotes />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+
+      </BrowserRouter>
 
     </>
   )

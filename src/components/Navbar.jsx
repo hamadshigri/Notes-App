@@ -1,10 +1,30 @@
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-function Navbar() {
+function Navbar({setSearchItem, setSelectItem}) {
+  const { pathname } = useLocation();
+
   return (
     <>
-      <div className="flex flex-col gap-2 bg-[#437993] p-[11px] pl-[150px]">
-        <h2 className="text-white text-4xl font-bold pt-2">Notes App</h2>
-        <p className="text-white text-base font-light">Take Notes and never forget</p>
+      <div className="bg-[#F7F7F7] flex justify-center items-center gap-10 p-4">
+
+        {pathname === '/' ? (
+          <div className='flex gap-4'>
+            <input type="text" onChange={(e) => setSearchItem(e.target.value)} placeholder="Filter by" className="bg-white p-2" />
+            <select name="filter" id="filter" onChange={(e) => setSelectItem(e.target.value)} className="bg-white p-2">
+              <option value="sortby">Sort By</option>
+              <option value="alphabets">Alphabets</option>
+              <option value="lastedited">Last Edited</option>
+              <option value="recentlycreated">Recently Created</option>
+            </select>
+          </div>
+        ) : (
+          <div className="flex justify-start items-center w-full max-w-[55%]">
+            <div className="gap-10 p-4">
+              <Link to="/"><h2 className="text-lg text-center">Home</h2></Link>
+            </div>
+          </div>
+        )}
       </div>
     </>
   )
