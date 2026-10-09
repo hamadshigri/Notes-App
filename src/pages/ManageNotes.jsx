@@ -69,7 +69,8 @@ const ManageNotes = () => {
     Swal.fire({
         title: "Deleted!",
         text: "Your item has been successfully removed.",
-        icon: "success"
+        icon: "success",
+        confirmButtonColor: '#437993'
       });
     deleteNotify();
     navigate("/");
