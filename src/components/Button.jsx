@@ -1,4 +1,3 @@
-
 const Button = ({name, clickHandler}) => {
     return (
         <>

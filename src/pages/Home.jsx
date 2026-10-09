@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 
+
 const Home = () => {
   const [searchItem, setSearchItem] = useState("");
   const [selectItem, setSelectItem] = useState("");
@@ -37,7 +38,6 @@ const Home = () => {
     <>
       <Navbar setSearchItem={setSearchItem} setSelectItem={setSelectItem} />
       <div className="relative h-[calc(100vh-173px)]">
-        {console.log("------",filteredNotes)}
         {filteredNotes.map((note, index) => (
           <Link key={index} to={`/add-notes?id=${note.id}`}><Item title={note.title} message={note.message} createdAt={note.createdAt} /></Link>
         ))}
