@@ -3,7 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
 import Navbar from "../components/Navbar";
 import { toast } from 'react-toastify';
-
+import { handleConfirmation } from "../utils/swalHelper";
+import Swal from "sweetalert2";
 
 const ManageNotes = () => {
   const titleRef = useRef("");
@@ -14,7 +15,6 @@ const ManageNotes = () => {
   const addNotify = () => toast("Notes Added!");
   const updateNotify = () => toast("Notes Updated!");
   const deleteNotify = () => toast("Notes Deleted!");
-
 
 
   let notes = JSON.parse(localStorage.getItem("notes")) ?? [];
@@ -57,12 +57,26 @@ const ManageNotes = () => {
     updateNotify();
   }
 
-  function handleDelete(e) {
+  async function handleDelete(e) {
     e.preventDefault();
+    const result = await handleConfirmation(
+      "Delete Item?", 
+      "This action cannot be undone."
+    );
+    if (result.isConfirmed) {
     const note = notes.filter(n => n.id != id);
     localStorage.setItem("notes", JSON.stringify(note));
-    navigate("/");
+    Swal.fire({
+        title: "Deleted!",
+        text: "Your item has been successfully removed.",
+        icon: "success"
+      });
     deleteNotify();
+    navigate("/");
+    } else {
+      console.log("User canceled the deletion.");
+    }
+
   }
 
   return (
