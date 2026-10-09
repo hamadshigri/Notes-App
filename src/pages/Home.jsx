@@ -18,12 +18,10 @@ const Home = () => {
   },[searchItem])
 
 
-
-
   useEffect(() => {
     if (selectItem == "alphabets") {
       setFilteredNotes( prev => [...prev].sort((a, b) => a.title.localeCompare(b.title)));
-    }else if (selectItem == "recentlycreated"){
+    } else if (selectItem == "recentlycreated"){
       setFilteredNotes( prev => [...prev].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
     }
     else if (selectItem == "lastedited") {

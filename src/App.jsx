@@ -11,8 +11,8 @@ function App() {
     <>
       <BrowserRouter>
         <Header/>
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <Routes >
+          <Route path="/" element={<Home />} errorElement={<NotFound />}/>
           <Route path="/add-notes" element={<ManageNotes />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
