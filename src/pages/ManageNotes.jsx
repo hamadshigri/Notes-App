@@ -36,7 +36,11 @@ const ManageNotes = () => {
     const message = messageRef.current.value;
     const createdAt = new Date();
 
-    if (title && message) {
+    if (!title || !message) {
+      alert("please add missing data");
+      return;
+    }
+
     let data = { "id": Date.now(), "title": title, "message": message, "createdAt": createdAt }
     notes.push(data)
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -44,26 +48,29 @@ const ManageNotes = () => {
     messageRef.current.value = "";
     navigate("/");
     addNotify();
-    } else {
-      alert("Please add missing data");
-    }
   }
 
   function handleUpdate(e) {
     e.preventDefault();
     const title = titleRef.current.value;
     const message = messageRef.current.value;
-    if (title && message) {
+    if (!title || !message) {
+      alert("please add missing data");
+      return;
+    }
+    let currentNote = notes.find(note => note.id == id);
+    if (currentNote) {
+      if (currentNote.title === title && currentNote.message === message) {
+        alert("No changes detected, please modify the title or message to update.");
+        return;
+      }
       const updatedAt = new Date();
       let data = { "title": title, "message": message, "updatedAt": updatedAt }
       let updatedNotes = notes.map(note => note.id == id ? { ...note, ...data } : note);
       localStorage.setItem("notes", JSON.stringify(updatedNotes));
       navigate("/");
       updateNotify();
-    } else {
-      alert("Please add missing data");
     }
-
   }
 
   async function handleDelete(e) {
