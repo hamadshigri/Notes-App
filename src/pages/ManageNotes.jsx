@@ -36,6 +36,7 @@ const ManageNotes = () => {
     const message = messageRef.current.value;
     const createdAt = new Date();
 
+    if (title && message) {
     let data = { "id": Date.now(), "title": title, "message": message, "createdAt": createdAt }
     notes.push(data)
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -43,37 +44,45 @@ const ManageNotes = () => {
     messageRef.current.value = "";
     navigate("/");
     addNotify();
+    } else {
+      alert("Please add missing data");
+    }
   }
 
   function handleUpdate(e) {
     e.preventDefault();
     const title = titleRef.current.value;
     const message = messageRef.current.value;
-    const updatedAt = new Date();
-    let data = { "title": title, "message": message, "updatedAt": updatedAt }
-    let updatedNotes = notes.map(note => note.id == id ? { ...note, ...data } : note);
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
-    navigate("/");
-    updateNotify();
+    if (title && message) {
+      const updatedAt = new Date();
+      let data = { "title": title, "message": message, "updatedAt": updatedAt }
+      let updatedNotes = notes.map(note => note.id == id ? { ...note, ...data } : note);
+      localStorage.setItem("notes", JSON.stringify(updatedNotes));
+      navigate("/");
+      updateNotify();
+    } else {
+      alert("Please add missing data");
+    }
+
   }
 
   async function handleDelete(e) {
     e.preventDefault();
     const result = await handleConfirmation(
-      "Delete Item?", 
+      "Delete Item?",
       "This action cannot be undone."
     );
     if (result.isConfirmed) {
-    const note = notes.filter(n => n.id != id);
-    localStorage.setItem("notes", JSON.stringify(note));
-    Swal.fire({
+      const note = notes.filter(n => n.id != id);
+      localStorage.setItem("notes", JSON.stringify(note));
+      Swal.fire({
         title: "Deleted!",
         text: "Your item has been successfully removed.",
         icon: "success",
         confirmButtonColor: '#437993'
       });
-    deleteNotify();
-    navigate("/");
+      deleteNotify();
+      navigate("/");
     } else {
       console.log("User canceled the deletion.");
     }
@@ -84,9 +93,9 @@ const ManageNotes = () => {
     <>
       <Navbar />
       <div className="flex justify-center">
-        <div className="flex flex-col gap-4 w-[700px] pt-4">
-          <input type="text" ref={titleRef} placeholder="Type Your Notes Title" className="bg-[#F7F7F7] p-4" />
-          <textarea cols="4" rows="4" ref={messageRef} className="bg-[#F7F7F7] p-4" placeholder="Type Your Notes Body" ></textarea>
+        <div className="flex flex-col gap-4 w-[850px] pt-4">
+          <input type="text" ref={titleRef} placeholder="Type Your Notes Title" maxLength='50' className="bg-[#F7F7F7] p-4" required />
+          <textarea cols="4" rows="4" ref={messageRef} className="bg-[#F7F7F7] p-4" maxlength="200" placeholder="Type Your Notes Body" required></textarea>
           {!id ? <Button name="Add Notes" clickHandler={handleSubmit} /> :
             (<div className="flex justify-between">
               <Button name="Update" clickHandler={handleUpdate} />
