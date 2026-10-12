@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
 import Navbar from "../components/Navbar";
 import { toast } from 'react-toastify';
-import { handleConfirmation } from "../utils/swalHelper";
+import { handleConfirmation } from "../utils/SwalHelper";
 import Swal from "sweetalert2";
 
 const ManageNotes = () => {
